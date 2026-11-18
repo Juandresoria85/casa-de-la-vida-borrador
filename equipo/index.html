@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es-EC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Datos para la nueva web | Casa de la Vida</title>
+<link rel="icon" href="../favicon-48.png" type="image/png">
+<style>
+  :root { --azul:#1746a2; --osc:#0e2a66; --cielo:#cfe8fa; --sol:#ffc928; --suave:#fff0bf; --verde:#0b7f44; --crema:#fbf6ee; --tinta:#14213d; --gris:#5b6478; --coral:#ff6b5b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--crema); color:var(--tinta); font:17px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:12px 12px 110px; }
+  main { max-width:720px; margin:0 auto; display:grid; gap:12px; }
+  h1 { font-size:clamp(1.7rem,6vw,2.4rem); line-height:1.1; margin:0 0 10px; }
+  h2 { font-size:1.3rem; margin:0 0 6px; }
+  p { margin:0 0 10px; }
+  .bloque { background:#fff; border-radius:20px; padding:22px; }
+  .azul { background:var(--azul); color:#fff; }
+  .suave { background:var(--suave); }
+  .logo { height:44px; background:#fff; border-radius:12px; padding:6px 12px; margin-bottom:14px; display:block; }
+  .areas { display:grid; gap:8px; grid-template-columns:1fr 1fr; margin-top:12px; }
+  .area { min-height:56px; border-radius:14px; border:2px solid var(--tinta); background:#fff; font:700 1rem inherit; color:var(--tinta); padding:8px 12px; cursor:pointer; text-align:left; }
+  .area[aria-pressed="true"] { background:var(--tinta); color:#fff; }
+  .pregunta { border-top:1px solid rgba(20,33,61,.14); padding:16px 0 4px; }
+  .pregunta:first-of-type { border-top:0; padding-top:4px; }
+  .pregunta > label, .pregunta > .enun { font-weight:700; display:block; margin-bottom:6px; }
+  .cod { font-size:.72rem; font-weight:700; color:var(--azul); letter-spacing:.06em; }
+  .ayuda { font-size:.9rem; color:var(--gris); margin:0 0 8px; }
+  .dato { background:var(--cielo); border-radius:12px; padding:10px 12px; margin:0 0 8px; font-weight:600; white-space:pre-line; }
+  input[type=text], textarea { width:100%; font:inherit; padding:12px; border-radius:12px; border:2px solid rgba(20,33,61,.25); background:#fff; color:var(--tinta); min-height:50px; }
+  textarea { min-height:92px; resize:vertical; }
+  input:focus, textarea:focus, button:focus-visible { outline:3px solid var(--sol); outline-offset:2px; }
+  .opciones { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+  .opciones label { display:inline-flex; align-items:center; gap:8px; min-height:46px; padding:6px 14px; border-radius:999px; border:2px solid rgba(20,33,61,.3); font-weight:600; cursor:pointer; background:#fff; }
+  .opciones input { width:20px; height:20px; accent-color:var(--azul); margin:0; }
+  .opciones label:has(input:checked) { background:var(--cielo); border-color:var(--azul); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; min-height:54px; padding:12px 20px; border-radius:14px; border:0; font:700 1.02rem inherit; cursor:pointer; text-decoration:none; background:var(--tinta); color:#fff; }
+  .btn.verde { background:var(--verde); } .btn.claro { background:#fff; color:var(--tinta); box-shadow:inset 0 0 0 2px var(--tinta); }
+  .acciones { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .barra { position:fixed; left:0; right:0; bottom:0; background:rgba(251,246,238,.96); border-top:1px solid rgba(20,33,61,.12); padding:10px 12px calc(10px + env(safe-area-inset-bottom)); }
+  .barra div { max-width:720px; margin:0 auto; display:flex; gap:10px; align-items:center; justify-content:space-between; }
+  .avance { font-weight:700; font-size:.95rem; }
+  .aviso { background:#ffe2dd; border-radius:12px; padding:10px 12px; font-weight:600; }
+  [hidden] { display:none !important; }
+  #resumen { white-space:pre-wrap; font:0.9rem/1.45 ui-monospace,Consolas,monospace; background:var(--crema); border-radius:12px; padding:12px; max-height:260px; overflow:auto; }
+</style>
+</head>
+<body>
+<main>
+  <section class="bloque azul">
+    <img class="logo" src="../marca/logo-horizontal.svg" alt="Casa de la Vida" onerror="this.remove()">
+    <h1>Ayúdanos a completar la nueva página web</h1>
+    <p>Estamos renovando la web de la Casa de la Vida para que una madre encuentre ayuda en segundos. <strong>Gracias por las respuestas que ya enviaron:</strong> aquí quedan solo las preguntas que todavía faltan.</p>
+    <p><strong>Toma de 5 a 10 minutos.</strong> Elige tu área, responde solo lo que sepas y envíalo. Si no sabes algo, déjalo en blanco o escribe quién lo sabe.</p>
+  </section>
+
+  <section class="bloque suave">
+    <h2>Antes de empezar</h2>
+    <p><strong>No escribas contraseñas</strong> ni datos de madres o pacientes. Las claves se entregan aparte, por llamada.</p>
+    <p class="ayuda" style="color:var(--tinta)">Esta página no guarda tus respuestas en ningún servidor. Se quedan en tu teléfono hasta que tú las envías a Paola por WhatsApp o por correo.</p>
+  </section>
+
+  <section class="bloque">
+    <div class="pregunta">
+      <label for="quien">Tu nombre</label>
+      <input type="text" id="quien" autocomplete="name">
+    </div>
+    <div class="pregunta">
+      <span class="enun">¿De qué área nos puedes contar?</span>
+      <p class="ayuda">Puedes responder más de una, de una en una.</p>
+      <div class="areas" id="areas"></div>
+    </div>
+  </section>
+
+  <section class="bloque" id="caja" hidden>
+    <h2 id="titulo-area"></h2>
+    <p class="ayuda" id="sub-area"></p>
+    <div id="preguntas"></div>
+  </section>
+
+  <section class="bloque" id="envio" hidden>
+    <h2>Enviar mis respuestas</h2>
+    <p>Revisa el resumen y envíalo a Paola. Puedes volver luego y responder otra área.</p>
+    <div id="resumen" tabindex="0" aria-label="Resumen de tus respuestas"></div>
+    <div class="acciones">
+      <button class="btn verde" type="button" id="b-wa">Enviar por WhatsApp</button>
+      <button class="btn" type="button" id="b-correo">Enviar por correo</button>
+      <button class="btn claro" type="button" id="b-copiar">Copiar texto</button>
+    </div>
+    <p class="aviso" id="msj" role="status" hidden></p>
+    <p class="ayuda" style="margin-top:10px">Si tienes fotos o documentos (el logo original, fotos recientes, el afiche del Bingo), envíalos a Paola por WhatsApp indicando el código de la pregunta.</p>
+  </section>
+</main>
+
+<div class="barra" id="barra" hidden><div><span class="avance" id="avance"></span><button class="btn verde" type="button" id="b-ir">Revisar y enviar</button></div></div>
+
+<script>
+(function () {
+  // Tipos: si (afirmación para confirmar: Sí / No / No sé + corrección), txt, largo, ops (opciones + otra)
+  var AREAS = [
+    { id: 'A', nombre: 'Recepción y Administración', sub: 'Dirección, teléfonos y horarios.', p: [
+      { c: 'A1', t: 'si', e: '¿Esta es la dirección correcta?', d: 'Todos los Santos 136 y Víctor Emilio Estrada, Urdesa (atrás de la Iglesia Redonda)' },
+      { c: 'A2', t: 'txt', e: '¿Hay dónde parquear? ¿Dónde?' },
+      { c: 'A3', t: 'si', e: '¿Siguen vigentes estos teléfonos?', d: 'Recepción: 04 288 8116\nConmutador: 099 375 1805\nWhatsApp: 099 156 3925' },
+      { c: 'A4', t: 'txt', e: 'Extensiones del conmutador por área', a: 'Por ejemplo: Centro Médico, extensión 200.' },
+      { c: 'A5', t: 'ops', e: '¿Hasta qué hora atiende la oficina de lunes a viernes?', o: ['16:30', '17:00', '17:30'] },
+      { c: 'A6', t: 'txt', e: '¿Qué correo publicamos en la web para el público y quién lo revisa?' }
+    ] },
+    { id: 'C', nombre: 'Centro Médico', sub: 'Citas, precios y profesionales.', p: [
+      { c: 'C1', t: 'txt', e: '¿A qué número se agendan las citas y quién las agenda?', a: 'Indica si ese número tiene WhatsApp.' },
+      { c: 'C2', t: 'si', e: '¿Siguen vigentes estos precios?', d: 'Medicina general, Ginecología, Pediatría: $5 (lun a vie, desde las 8:00; última cita 12:30)\nNutrición: $5 (con cita)\nOdontología: $6 limpieza\nPsicología: $10 (con cita)\nTerapia del lenguaje: $8 (miércoles, con cita)\nLaboratorio: lun a vie, 7:30 a 13:00\nEcografías: lunes, miércoles y viernes, desde $10' },
+      { c: 'C3', t: 'ops', e: 'Consulta de optometría: ¿cuánto cuesta hoy?', a: 'En la web actual dice $3 y en el cuestionario $5.', o: ['$3', '$5'] },
+      { c: 'C4', t: 'si', e: '¿Siguen vigentes estos precios de ecografías?', d: 'Obstétrica, transvaginal y partes blandas: $10\nAbdominopélvica, mamas y tiroides: $18' },
+      { c: 'C5', t: 'largo', e: '¿Cuáles ecografías piden ayuno o vejiga llena?' },
+      { c: 'C6', t: 'largo', e: 'Laboratorio: listado de exámenes y precios', a: 'La Dirección nos dijo que lo enviaría. Si es una hoja impresa, basta con una foto clara por WhatsApp.' },
+      { c: 'C7', t: 'txt', e: '¿Hay descuentos o atención gratuita para las madres del Plan Buena Esperanza?' },
+      { c: 'C8', t: 'largo', e: 'Profesionales que aceptan aparecer en la web', a: 'Recibimos la lista impresa. Indica especialidad y días de cada uno. El nombre se publica solo con su autorización escrita (hay un formato listo).' },
+      { c: 'C9', t: 'largo', e: 'Atenciones por año (aunque sea aproximado)', a: 'Ginecológicas y pediátricas de 2023, 2024, 2025 y 2026. Indica si el dato es exacto o estimado.' }
+    ] },
+    { id: 'D', nombre: 'Sala de Madres', sub: 'Lo más importante de la nueva web. Responde como si le hablaras a una madre que llega por primera vez.', p: [
+      { c: 'D1', t: 'si', e: 'El WhatsApp lo atiende caja, de 7:00 a 15:30. ¿Es este número?', d: '099 156 3925' },
+      { c: 'D4', t: 'txt', e: '¿Qué documentos debe llevar una madre la primera vez?' },
+      { c: 'D5', t: 'ops', e: '¿Una madre debe ser católica o estar casada para que la atiendan?', o: ['No, atendemos a todas'] },
+      { c: 'D6', t: 'ops', e: '¿Puede venir acompañada (pareja, mamá, amiga)?', o: ['Sí', 'Depende'] },
+      { c: 'D7', t: 'largo', e: '¿Cómo le explicamos que lo que cuente es confidencial?', a: 'Escríbelo con tus palabras.' },
+      { c: 'D8', t: 'si', e: '¿Así es la primera visita?', d: '1. La reciben en la entrada y la inscriben.\n2. Pasa a la Sala de Madres.\n3. Una voluntaria la acoge y la orienta.\n4. La atiende el profesional.' },
+      { c: 'D9', t: 'largo', e: 'Madres atendidas y bebés nacidos por año (aunque sea aproximado)' },
+      { c: 'D10', t: 'txt', e: '¿Existe un formato de consentimiento para usar fotos e historias?', a: 'Sin escribir nombres de madres aquí.' },
+      { c: 'D11', t: 'largo', e: 'Voluntariado en la Sala de Madres: qué se necesita, requisitos y tiempo' }
+    ] },
+    { id: 'F', nombre: 'Fondos y Contabilidad', sub: 'Donaciones, Bingo, empresas y transparencia.', p: [
+      { c: 'F1', t: 'txt', e: 'Nombre completo de la razón social, tal como consta en el RUC 0992521503001', a: 'Nos dijeron "AMBE". ¿Es "Asociación de Fieles María de la Buena Esperanza"? Es también el titular de la cuenta.' },
+      { c: 'F2', t: 'ops', e: 'La cuenta del Banco de Guayaquil (ahorros 11542811), ¿sigue vigente?', a: 'La del Banco Bolivariano ya está confirmada.', o: ['Sí, publicarla', 'No, quitarla'] },
+      { c: 'F4', t: 'txt', e: '¿Cómo se dona con tarjeta? ¿En la Casa, por un enlace de pago o ambos? ¿También hay factura por transferencia?' },
+      { c: 'F5', t: 'largo', e: 'Padrinos de la Vida: montos mensuales sugeridos y qué cubre cada uno', a: 'Por ejemplo: con $25 se cubre una ecografía y un control.' },
+      { c: 'F6', t: 'txt', e: '¿Cuánto cuesta, aproximadamente, acompañar a una madre todo su embarazo?' },
+      { c: 'F7', t: 'largo', e: '¿En qué se usan los fondos? Porcentajes aproximados', a: 'Personal médico, insumos y ajuares, mantenimiento, otros.' },
+      { c: 'F9', t: 'largo', e: 'Empresas que han apoyado y si autorizan publicar su nombre y logo', a: 'Incluye al hotel que presta los salones para el Bingo.' },
+      { c: 'F10', t: 'largo', e: 'Próximo Bingo: fecha, lugar, valor del cartón y cómo se compra', a: 'Indica si será presencial, por internet o ambos.' },
+      { c: 'F11', t: 'txt', e: '¿A qué se destina lo recaudado en el Bingo?' }
+    ] },
+    { id: 'E', nombre: 'Guías de la Vida', sub: 'Charlas en colegios.', p: [
+      { c: 'E1', t: 'largo', e: 'Temas actuales de las charlas y duración de cada una' },
+      { c: 'E3', t: 'txt', e: '¿Dónde es la formación de los miércoles y cuándo empieza el próximo grupo?' },
+      { c: 'E4', t: 'txt', e: 'Guías activos hoy, y colegios y estudiantes atendidos este año' },
+      { c: 'E5', t: 'ops', e: '¿También se dan charlas en parroquias?', o: ['Sí', 'No'] }
+    ] },
+    { id: 'B', nombre: 'Dirección', sub: 'Historia, aprobaciones y decisiones.', p: [
+      { c: 'B1', t: 'si', e: '¿Son correctas estas fechas de la historia?', d: '2005 (noviembre): un grupo de embarazadas se reúne a rezar en la parroquia.\n2007: se levanta el edificio.\n2008 (5 de mayo): se crea oficialmente la Casa de la Vida.' },
+      { c: 'B2', t: 'largo', e: 'Semblanza del P. Paulino para "Quiénes somos" (5 a 8 líneas)', a: 'Formación, ordenación, por qué fundó la Casa, y qué significan las siglas "sjs".' },
+      { c: 'B3', t: 'largo', e: 'En una frase: ¿qué le diría la Casa a una madre que llega con miedo?' },
+      { c: 'B4', t: 'largo', e: 'Programa 7LATIDOS: ¿qué incluye y desde cuándo se puede anunciar?' },
+      { c: 'B5', t: 'txt', e: '¿Quién aprueba los textos de la web y quién guardará las claves de la institución?' },
+      { c: 'B6', t: 'txt', e: '¿Quién publicará noticias al menos dos veces al mes?' },
+      { c: 'B7', t: 'largo', e: 'Personas del equipo que aceptan aparecer (nombre o solo cargo)' },
+      { c: 'B8', t: 'txt', e: 'Bingos por internet: ¿desde qué cuenta se transmiten (Facebook, YouTube) y quién transmite?' },
+      { c: 'B9', t: 'ops', e: '¿Existe un protocolo para atender a adolescentes embarazadas menores de edad?', o: ['Sí', 'No', 'No sé'] },
+      { c: 'B10', t: 'txt', e: 'Representante legal de la organización (nombre y cargo)' }
+    ] },
+    { id: 'I', nombre: 'Web y redes', sub: 'Dominio, alojamiento y cuentas. Sin contraseñas.', p: [
+      { c: 'I1', t: 'txt', e: 'El dominio casadelavida.org se renovó el 10 de noviembre de 2026. ¿Quién lo renovó, con qué empresa y a nombre de quién está?' },
+      { c: 'I2', t: 'txt', e: 'Alojamiento actual de la página: empresa, vencimiento y quién lo paga' },
+      { c: 'I3', t: 'txt', e: 'Telconet: nombre del contacto y número de cuenta de la Casa' },
+      { c: 'I4', t: 'txt', e: 'Correos @casadelavida.org que existen y quién los usa' },
+      { c: 'I5', t: 'largo', e: '¿Quién administra Facebook, Instagram, YouTube y el WhatsApp de la Casa?' },
+      { c: 'I6', t: 'txt', e: '¿Quién tiene el logo original y las fotos recientes? ¿Dónde están?' },
+      { c: 'I7', t: 'ops', e: 'El canal de YouTube donde está el video institucional, ¿es de la institución o de una persona?', o: ['De la institución', 'De una persona'] }
+    ] }
+  ];
+
+  var LLAVE = 'cdv-datos-web-v2';
+  var datos = {}; try { datos = JSON.parse(localStorage.getItem(LLAVE) || '{}'); } catch (e) { datos = {}; }
+  function guarda() { try { localStorage.setItem(LLAVE, JSON.stringify(datos)); } catch (e) { /* sin almacenamiento: no pasa nada */ } }
+  // Respuestas guardadas en este teléfono con el primer formulario (v1) que quizá no se enviaron.
+  // No se mezclan con las nuevas preguntas: se agregan al final del resumen con su pregunta original.
+  var V1 = { A1: '¿Esta es la dirección correcta?', A2: '¿Cómo le explicarías a alguien cómo llegar?', A3: '¿Siguen vigentes estos teléfonos?', A4: 'Extensiones del conmutador por área', A5: '¿Hasta qué hora atiende la oficina?', A6: 'Correo oficial de la Casa y quién lo revisa', A7: '¿Dónde y en qué horario se reciben las donaciones de insumos?',
+    C1: '¿A qué número se agendan las citas y quién las agenda?', C2: '¿Siguen vigentes estos precios y horarios?', C3: 'Consulta de optometría: ¿cuánto cuesta hoy?', C4: '¿Siguen vigentes estos precios de ecografías?', C5: '¿Qué preparación necesita cada ecografía?', C6: 'Laboratorio: exámenes, precios y ayuno', C7: '¿Descuentos para las madres del Plan Buena Esperanza?', C8: 'Profesionales que aceptan aparecer en la web', C9: 'Atenciones por año',
+    D1: '¿Este es el WhatsApp para las madres? (099 156 3925)', D2: '¿Quién responde ese WhatsApp y en qué horario?', D3: '¿Qué incluye hoy el Plan Buena Esperanza?', D4: '¿Qué documentos debe llevar una madre la primera vez?', D5: '¿Debe ser católica o estar casada?', D6: '¿Puede venir acompañada?', D7: '¿Cómo le explicamos que lo que cuente es confidencial?', D8: '¿Así es la primera visita?', D9: 'Madres atendidas y bebés nacidos por año', D10: '¿Existe un formato de consentimiento para fotos e historias?',
+    F1: 'Razón social y RUC', F2: '¿Siguen vigentes las cuentas para donaciones?', F3: 'Nombre del titular de las cuentas', F4: '¿Se puede donar con tarjeta, DeUna o Payphone? ¿Recibo o certificado?', F5: 'Padrinos de la Vida: montos y qué cubre cada uno', F6: '¿Cuánto cuesta acompañar a una madre todo su embarazo?', F7: '¿En qué se usan los fondos?', F8: '¿Qué insumos se necesitan hoy?', F9: 'Empresas que han apoyado y autorización de nombre y logo', F10: 'Próximo Bingo', F11: '¿A qué se destina lo recaudado en el Bingo?', F12: 'Voluntariado: tipos, requisitos y quién coordina',
+    E1: 'Temas, duración, edades y costo de las charlas', E2: '¿Cómo se solicita una charla y con cuánta anticipación?', E3: '¿Qué se necesita para ser Guía? ¿Cuándo y dónde es la capacitación?', E4: 'Guías activos, colegios y estudiantes atendidos este año',
+    B1: '¿Son correctas las fechas de la historia?', B2: 'Semblanza del P. Paulino', B3: '¿Qué le diría la Casa a una madre que llega con miedo?', B4: 'Programa 7LATIDOS: ¿ya se puede anunciar?', B5: '¿Quién aprueba los textos y guardará las claves?', B6: '¿Quién publicará noticias?', B7: 'Personas del equipo que aceptan aparecer', B8: 'Bingos por internet: cuenta y quién transmite', B9: '¿Protocolo para adolescentes embarazadas menores de edad?',
+    I1: 'Dominio casadelavida.org: quién lo renovó y a nombre de quién', I2: 'Alojamiento actual de la página', I3: 'Telconet: contacto y número de cuenta', I4: 'Correos @casadelavida.org y quién los usa', I5: '¿Quién administra las redes y el WhatsApp?', I6: '¿Quién tiene el logo original y las fotos recientes?', I7: 'Canal de YouTube del video institucional' };
+  var previas = {}; try { previas = JSON.parse(localStorage.getItem('cdv-datos-web-v1') || '{}'); } catch (e) { previas = {}; }
+  if (!datos.quien && previas.quien) datos.quien = previas.quien;
+  function lineasPrevias() {
+    var l = [];
+    Object.keys(V1).forEach(function (c) {
+      var r = [previas[c], previas[c + 'n']].filter(function (x) { return x && String(x).trim(); }).join(' · ');
+      if (r) { l.push('[' + c + '] ' + V1[c]); l.push('→ ' + r); }
+    });
+    return l;
+  }
+  var $ = function (id) { return document.getElementById(id); };
+  var actual = null;
+
+  $('quien').value = datos.quien || '';
+  $('quien').addEventListener('input', function () { datos.quien = this.value; guarda(); });
+
+  AREAS.forEach(function (a) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'area'; b.textContent = a.nombre; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () { abre(a, b); });
+    $('areas').appendChild(b);
+  });
+
+  function campo(tag, attrs) { var el = document.createElement(tag); Object.keys(attrs || {}).forEach(function (k) { if (k === 'text') el.textContent = attrs[k]; else el.setAttribute(k, attrs[k]); }); return el; }
+
+  function abre(area, boton) {
+    actual = area;
+    Array.prototype.forEach.call(document.querySelectorAll('.area'), function (o) { o.setAttribute('aria-pressed', String(o === boton)); });
+    $('titulo-area').textContent = area.nombre; $('sub-area').textContent = area.sub;
+    var caja = $('preguntas'); caja.textContent = '';
+    area.p.forEach(function (q) {
+      var div = campo('div', { class: 'pregunta' });
+      div.appendChild(campo('span', { class: 'cod', text: q.c }));
+      var id = 'r-' + q.c;
+      if (q.t === 'txt' || q.t === 'largo') {
+        div.appendChild(campo('label', { for: id, text: q.e }));
+        if (q.a) div.appendChild(campo('p', { class: 'ayuda', text: q.a }));
+        var inp = campo(q.t === 'largo' ? 'textarea' : 'input', q.t === 'largo' ? { id: id } : { id: id, type: 'text' });
+        inp.value = datos[q.c] || '';
+        inp.addEventListener('input', function () { datos[q.c] = inp.value; guarda(); pinta(); });
+        div.appendChild(inp);
+      } else {
+        div.appendChild(campo('span', { class: 'enun', text: q.e }));
+        if (q.a) div.appendChild(campo('p', { class: 'ayuda', text: q.a }));
+        if (q.d) div.appendChild(campo('p', { class: 'dato', text: q.d }));
+        var ops = q.t === 'si' ? ['Sí', 'No', 'No sé'] : q.o;
+        var grupo = campo('div', { class: 'opciones', role: 'group', 'aria-label': q.e });
+        ops.forEach(function (o) {
+          var l = campo('label'); var r = campo('input', { type: 'radio', name: id, value: o });
+          if (datos[q.c] === o) r.checked = true;
+          r.addEventListener('change', function () { datos[q.c] = o; guarda(); pinta(); });
+          l.appendChild(r); l.appendChild(document.createTextNode(o)); grupo.appendChild(l);
+        });
+        div.appendChild(grupo);
+        var nota = campo('input', { type: 'text', id: id + '-n', placeholder: q.t === 'si' ? 'Si algo cambió, escribe aquí lo correcto' : 'Otra respuesta o un comentario', 'aria-label': 'Comentario sobre: ' + q.e });
+        nota.value = datos[q.c + 'n'] || '';
+        nota.addEventListener('input', function () { datos[q.c + 'n'] = nota.value; guarda(); pinta(); });
+        div.appendChild(nota);
+      }
+      caja.appendChild(div);
+    });
+    $('caja').hidden = false; $('envio').hidden = false; $('barra').hidden = false;
+    pinta();
+    $('caja').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function texto() {
+    var lineas = ['DATOS PARA LA NUEVA WEB (segunda ronda) · Casa de la Vida', 'Responde: ' + (datos.quien || '(sin nombre)'), 'Fecha: ' + new Date().toLocaleDateString('es-EC'), ''];
+    AREAS.forEach(function (a) {
+      var del = a.p.filter(function (q) { return (datos[q.c] || '').trim() || (datos[q.c + 'n'] || '').trim(); });
+      if (!del.length) return;
+      lineas.push('== ' + a.nombre + ' ==');
+      del.forEach(function (q) { lineas.push('[' + q.c + '] ' + q.e); lineas.push('→ ' + [datos[q.c], datos[q.c + 'n']].filter(function (x) { return x && x.trim(); }).join(' · ')); });
+      lineas.push('');
+    });
+    var pr = lineasPrevias();
+    if (pr.length) { lineas.push('== Respuestas guardadas del primer formulario =='); lineas = lineas.concat(pr); }
+    return lineas.join('\n').trim();
+  }
+  function respondidas() { var n = lineasPrevias().length / 2; AREAS.forEach(function (a) { a.p.forEach(function (q) { if ((datos[q.c] || '').trim() || (datos[q.c + 'n'] || '').trim()) n++; }); }); return n; }
+  function pinta() {
+    $('resumen').textContent = texto();
+    var n = respondidas();
+    $('avance').textContent = n === 0 ? 'Aún sin respuestas' : n + (n === 1 ? ' respuesta lista' : ' respuestas listas');
+  }
+  function di(t) { $('msj').hidden = false; $('msj').textContent = t; }
+  function listo() { if (!respondidas()) { di('Todavía no has respondido ninguna pregunta.'); return false; } if (!(datos.quien || '').trim()) { di('Escribe tu nombre al inicio para saber quién responde.'); $('quien').focus(); return false; } return true; }
+
+  $('b-ir').addEventListener('click', function () { $('envio').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  $('b-wa').addEventListener('click', function () {
+    if (!listo()) return;
+    var t = texto();
+    if (navigator.share) { navigator.share({ text: t }).then(function () { di('Elige el chat de Paola y envía. Gracias.'); }, function () {}); }
+    else { window.open('https://wa.me/?text=' + encodeURIComponent(t), '_blank', 'noopener'); di('Se abrió WhatsApp: elige el chat de Paola y envía. Gracias.'); }
+  });
+  $('b-correo').addEventListener('click', function () {
+    if (!listo()) return;
+    var para = ['paola', 'sorialegal.com'].join('@');
+    location.href = 'mailto:' + para + '?subject=' + encodeURIComponent('Datos para la nueva web: ' + (datos.quien || '')) + '&body=' + encodeURIComponent(texto());
+    di('Se abrió tu correo con las respuestas. Solo falta enviarlo. Gracias.');
+  });
+  $('b-copiar').addEventListener('click', function () {
+    if (!listo()) return;
+    var t = texto();
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { di('Texto copiado. Pégalo en un mensaje para Paola.'); }, function () { di('No se pudo copiar automáticamente. Mantén presionado el resumen y cópialo.'); });
+  });
+  pinta();
+  if (lineasPrevias().length) { $('envio').hidden = false; $('barra').hidden = false; di('Encontramos en este teléfono respuestas del primer formulario. Están incluidas en el resumen: envíalas a Paola, aunque no respondas nada más.'); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Cabeceras de seguridad (las leen Cloudflare Pages y Netlify; otros alojamientos las ignoran).
+# La política de contenido (CSP) va dentro de cada página, para que funcione en cualquier alojamiento.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/marca/*
+  Cache-Control: public, max-age=604800
+
+/admin/*
+  X-Robots-Tag: noindex
+
+/equipo/*
+  X-Robots-Tag: noindex

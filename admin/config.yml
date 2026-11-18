@@ -1,0 +1,348 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# Editor de contenido de la Casa de la Vida.
+# Cada "archivo" de abajo es un formulario: al guardar, el sitio se vuelve a publicar solo.
+# ANTES DE USARLO EN LÍNEA: cambiar "repo" por la cuenta y el repositorio reales de GitHub (ver LEEME.md).
+
+backend:
+  name: github
+  repo: CUENTA/casa-de-la-vida-sitio
+  branch: main
+
+locale: es
+media_folder: /public/media
+public_folder: /media
+
+collections:
+  - name: datos
+    label: Datos del sitio
+    files:
+      - name: contacto
+        label: Contacto, teléfonos y horarios
+        file: src/data/contacto.json
+        fields:
+          - { name: nombre, label: Nombre, widget: string }
+          - { name: lema, label: Lema, widget: string }
+          - { name: razonSocial, label: Razón social, widget: string, required: false }
+          - { name: ruc, label: RUC, widget: string, required: false }
+          - name: whatsapp
+            label: WhatsApp principal
+            widget: object
+            fields:
+              - { name: numero, label: "Número con código de país, sin signos (ej. 593991563925)", widget: string }
+              - { name: texto, label: "Número como se muestra (ej. 099 156 3925)", widget: string }
+              - { name: area, label: Área que responde, widget: string }
+              - { name: horario, label: "Horario de respuesta (texto)", widget: string, required: false }
+              - { name: pendiente, label: "Dato pendiente (dejar vacío cuando esté confirmado)", widget: string, required: false }
+          - name: telefonos
+            label: Teléfonos
+            widget: list
+            fields:
+              - { name: area, label: Área, widget: string }
+              - { name: tel, label: "Número para llamar (ej. +59342888116)", widget: string }
+              - { name: texto, label: "Número como se muestra", widget: string }
+          - name: telefonoCitas
+            label: Teléfono para citas médicas
+            widget: object
+            fields:
+              - { name: tel, label: "Número para llamar", widget: string }
+              - { name: texto, label: "Número como se muestra", widget: string }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - { name: correo, label: Correo oficial, widget: string, required: false }
+          - name: direccion
+            label: Dirección
+            widget: object
+            fields:
+              - { name: linea, label: Calles y número, widget: string }
+              - { name: sector, label: Sector y ciudad, widget: string }
+              - { name: referencias, label: "Referencias, parqueo y buses", widget: text, required: false }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+              - { name: mapaConsulta, label: "Texto que se busca en Google Maps", widget: string }
+              - { name: latitud, label: Latitud, widget: string, required: false }
+              - { name: longitud, label: Longitud, widget: string, required: false }
+          - name: horarios
+            label: Horarios por área
+            widget: list
+            fields:
+              - { name: area, label: Área, widget: string }
+              - { name: texto, label: "Días y horas", widget: string }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - { name: notaHorario, label: Nota de horario, widget: string, required: false }
+          - name: redes
+            label: Redes sociales
+            widget: object
+            fields:
+              - { name: facebook, label: Facebook (dirección completa), widget: string }
+              - { name: facebookTexto, label: Facebook (nombre), widget: string }
+              - { name: instagram, label: Instagram (dirección completa), widget: string }
+              - { name: instagramTexto, label: Instagram (nombre), widget: string }
+              - { name: youtube, label: YouTube (dirección completa), widget: string, required: false }
+          - name: formularios
+            label: Formularios (avanzado)
+            widget: object
+            fields:
+              - { name: endpoint, label: "Servicio de envío (vacío = los formularios abren WhatsApp)", widget: string, required: false }
+
+      - name: servicios
+        label: Centro Médico (servicios, precios y horarios)
+        file: src/data/servicios.json
+        fields:
+          - { name: nota, label: Nota sobre precios, widget: string, required: false }
+          - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - name: lista
+            label: Servicios
+            widget: list
+            summary: "{{nombre}} · {{precio}}"
+            fields:
+              - { name: nombre, label: Nombre, widget: string }
+              - { name: icono, label: Ícono, widget: select, options: [pulso, corazon, bebe, manzana, diente, ojo, charla, personas, frasco, onda, cruz] }
+              - { name: dias, label: "Días que atiende (1 = lunes ... 5 = viernes)", widget: select, multiple: true, options: [1, 2, 3, 4, 5, 6] }
+              - { name: cuando, label: "Días y horario (texto)", widget: string }
+              - { name: precio, label: "Precio (ej. $5)", widget: string, required: false }
+              - { name: detalle, label: "Detalle del precio (ej. desde, limpieza)", widget: string, required: false }
+              - { name: cita, label: Requiere cita previa, widget: boolean, default: false }
+              - { name: pendiente, label: Dato por confirmar, widget: string, required: false }
+          - name: ecografias
+            label: Ecografías
+            widget: object
+            fields:
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+              - name: lista
+                label: Tipos y precios
+                widget: list
+                fields:
+                  - { name: nombre, label: Tipo, widget: string }
+                  - { name: precio, label: Precio, widget: string }
+          - name: laboratorio
+            label: Laboratorio
+            widget: object
+            fields:
+              - { name: texto, label: Texto, widget: text }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - name: profesionales
+            label: "Profesionales (solo con autorización escrita)"
+            widget: list
+            required: false
+            fields:
+              - { name: nombre, label: "Nombre (opcional)", widget: string, required: false }
+              - { name: especialidad, label: Especialidad, widget: string }
+              - { name: dias, label: Días que atiende, widget: string }
+
+      - name: eventos
+        label: Eventos y En vivo
+        file: src/data/eventos.json
+        fields:
+          - name: enVivo
+            label: Transmisión en vivo
+            widget: object
+            fields:
+              - { name: estado, label: Estado, widget: select, options: [{ label: "Próximamente", value: proximamente }, { label: "EN VIVO ahora", value: en-vivo }, { label: "Grabación disponible", value: grabacion }, { label: "Sin transmisión", value: sin-evento }] }
+              - { name: titulo, label: Título, widget: string }
+              - { name: fecha, label: "Fecha (AAAA-MM-DD)", widget: string, required: false }
+              - { name: hora, label: "Hora (HH:MM, 24 horas)", widget: string, required: false }
+              - { name: plataforma, label: Plataforma, widget: select, options: [youtube, facebook] }
+              - { name: youtubeCanalId, label: "YouTube: identificador del canal (muestra siempre el directo del canal)", widget: string, required: false }
+              - { name: youtubeVideoId, label: "YouTube: identificador del video (tiene prioridad sobre el canal)", widget: string, required: false }
+              - { name: facebookVideoUrl, label: "Facebook: dirección completa del video", widget: string, required: false }
+              - { name: mensaje, label: Mensaje adicional, widget: text, required: false }
+              - { name: grabacionHasta, label: "Grabación disponible hasta (AAAA-MM-DD)", widget: string, required: false }
+          - name: bingo
+            label: Bingo
+            widget: object
+            fields:
+              - { name: nombre, label: Nombre, widget: string }
+              - { name: descripcion, label: Descripción, widget: text }
+              - { name: fecha, label: "Fecha (AAAA-MM-DD)", widget: string, required: false }
+              - { name: hora, label: Hora, widget: string, required: false }
+              - { name: lugar, label: Lugar, widget: string, required: false }
+              - { name: modalidad, label: "Modalidad (presencial, por internet o ambas)", widget: string, required: false }
+              - { name: valorCarton, label: Valor del cartón, widget: string, required: false }
+              - { name: comoComprar, label: Cómo se compra el cartón, widget: text, required: false }
+              - { name: premios, label: Premios, widget: list, required: false }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - name: agenda
+            label: Otros eventos
+            widget: list
+            required: false
+            fields:
+              - { name: fecha, label: "Fecha (AAAA-MM-DD)", widget: string }
+              - { name: nombre, label: Nombre, widget: string }
+              - { name: detalle, label: Detalle, widget: string, required: false }
+          - name: anteriores
+            label: Ediciones anteriores
+            widget: list
+            fields:
+              - { name: anio, label: Año, widget: string }
+              - { name: nombre, label: Nombre, widget: string }
+
+      - name: donar
+        label: Donaciones y Padrinos de la Vida
+        file: src/data/donar.json
+        fields:
+          - { name: titular, label: Titular de las cuentas, widget: string, required: false }
+          - { name: pendienteTitular, label: Dato pendiente (titular), widget: string, required: false }
+          - name: cuentas
+            label: Cuentas bancarias
+            widget: list
+            summary: "{{banco}} {{numero}}"
+            fields:
+              - { name: banco, label: Banco, widget: string }
+              - { name: tipo, label: Tipo de cuenta, widget: string }
+              - { name: numero, label: Número, widget: string }
+              - { name: confirmada, label: "Confirmada (si no, no se publica)", widget: boolean, default: false }
+          - name: otrosMedios
+            label: Otros medios de pago
+            widget: list
+            required: false
+            fields:
+              - { name: nombre, label: Medio, widget: string }
+              - { name: detalle, label: Detalle, widget: string }
+          - { name: pendienteMedios, label: Dato pendiente (medios), widget: string, required: false }
+          - name: padrinos
+            label: Padrinos de la Vida
+            widget: object
+            fields:
+              - { name: activo, label: Programa activo, widget: boolean, default: false }
+              - name: montos
+                label: Montos sugeridos
+                widget: list
+                required: false
+                fields:
+                  - { name: valor, label: "Monto (ej. $10)", widget: string }
+              - { name: queCubre, label: Qué cubre el aporte, widget: text, required: false }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+              - name: meta
+                label: Meta de campaña
+                widget: object
+                fields:
+                  - { name: texto, label: "Unidad (ej. padrinos este año)", widget: string, required: false }
+                  - { name: objetivo, label: Objetivo, widget: number, value_type: int, default: 0 }
+                  - { name: actual, label: Avance actual, widget: number, value_type: int, default: 0 }
+          - name: insumos
+            label: Donación de insumos
+            widget: object
+            fields:
+              - { name: lista, label: Qué se necesita hoy, widget: list, required: false }
+              - { name: recepcion, label: Dónde y cuándo se recibe, widget: string, required: false }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - name: voluntariado
+            label: Voluntariado
+            widget: object
+            fields:
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+
+      - name: impacto
+        label: Cifras de impacto y transparencia
+        file: src/data/impacto.json
+        fields:
+          - { name: nota, label: Nota (periodo de las cifras), widget: string, required: false }
+          - name: cifras
+            label: Cifras
+            widget: list
+            summary: "{{valor}} {{texto}}"
+            fields:
+              - { name: valor, label: "Número (vacío = pendiente, no se publica)", widget: string, required: false }
+              - { name: prefijo, label: "Prefijo (ej. $)", widget: string, required: false }
+              - { name: texto, label: Qué cuenta, widget: string }
+              - { name: pendiente, label: Quién debe dar el dato, widget: string, required: false }
+          - name: usoFondos
+            label: Uso de los fondos
+            widget: list
+            fields:
+              - { name: rubro, label: Rubro, widget: string }
+              - { name: porcentaje, label: "Porcentaje (solo el número)", widget: string, required: false }
+          - name: informeAnual
+            label: Informe anual
+            widget: object
+            fields:
+              - { name: anio, label: Año, widget: string, required: false }
+              - { name: archivo, label: "Archivo PDF (ruta, ej. /media/informe-2026.pdf)", widget: string, required: false }
+          - { name: representanteLegal, label: Representante legal, widget: string, required: false }
+
+      - name: aliados
+        label: Aliados y patrocinadores
+        file: src/data/aliados.json
+        fields:
+          - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+          - name: lista
+            label: Aliados
+            widget: list
+            summary: "{{nombre}}"
+            fields:
+              - { name: nombre, label: Nombre, widget: string }
+              - { name: aporte, label: Qué aporta, widget: string }
+              - { name: logo, label: Logo, widget: image, required: false }
+              - { name: enlace, label: Sitio web, widget: string, required: false }
+              - { name: autorizado, label: "Autorizó por escrito publicar su nombre y logo", widget: boolean, default: false }
+
+      - name: preguntas
+        label: Preguntas frecuentes de las madres
+        file: src/data/preguntas.json
+        fields:
+          - name: madres
+            label: Preguntas
+            widget: list
+            summary: "{{pregunta}}"
+            fields:
+              - { name: pregunta, label: Pregunta, widget: string }
+              - { name: respuesta, label: "Respuesta (vacía = no se publica)", widget: text, required: false }
+              - { name: pendiente, label: Dato pendiente, widget: string, required: false }
+
+      - name: historia
+        label: Quiénes somos (historia y equipo)
+        file: src/data/historia.json
+        fields:
+          - { name: nota, label: Nota interna, widget: text, required: false }
+          - name: hitos
+            label: Línea de tiempo
+            widget: list
+            summary: "{{anio}} {{titulo}}"
+            fields:
+              - { name: anio, label: Año, widget: string }
+              - { name: titulo, label: Título, widget: string }
+              - { name: texto, label: Texto, widget: text }
+              - { name: fuente, label: Fuente (solo visible en revisión), widget: string, required: false }
+          - name: fundador
+            label: Fundador
+            widget: object
+            fields:
+              - { name: nombre, label: Nombre, widget: string }
+              - { name: semblanza, label: Semblanza, widget: text, required: false }
+              - { name: autorizado, label: Autorizó publicar, widget: boolean, default: false }
+          - { name: mision, label: Misión, widget: text, required: false }
+          - { name: vision, label: Visión, widget: text, required: false }
+          - name: equipo
+            label: "Equipo (solo con autorización escrita)"
+            widget: list
+            required: false
+            fields:
+              - { name: nombre, label: Nombre, widget: string }
+              - { name: cargo, label: Cargo, widget: string }
+
+      - name: sitio
+        label: Ajustes generales
+        file: src/data/sitio.json
+        fields:
+          - { name: modoRevision, label: "Modo revisión (muestra los datos pendientes y oculta el sitio a Google)", widget: boolean, default: true }
+          - { name: avisoRevision, label: Aviso de revisión, widget: string }
+          - name: analitica
+            label: Analítica (sin cookies)
+            widget: object
+            fields:
+              - { name: proveedor, label: Proveedor, widget: select, options: ["", cloudflare], required: false }
+              - { name: token, label: Token, widget: string, required: false }
+          - { name: mostrar7Latidos, label: Anunciar el Programa 7LATIDOS, widget: boolean, default: false }
+
+  - name: noticias
+    label: Noticias e historias
+    label_singular: Noticia
+    folder: src/content/noticias
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{fecha}} · {{titulo}}"
+    fields:
+      - { name: titulo, label: Título, widget: string }
+      - { name: fecha, label: Fecha, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { name: categoria, label: Categoría, widget: select, options: ["Casa de la Vida", "Madres", "Centro Médico", "Guías de la Vida", "Eventos"] }
+      - { name: resumen, label: Resumen (una o dos líneas), widget: text }
+      - { name: pendiente, label: "Nota de revisión (vacía cuando esté lista)", widget: string, required: false }
+      - { name: body, label: Texto, widget: markdown }
